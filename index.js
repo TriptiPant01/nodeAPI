@@ -1,7 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
-// import userRoutes from "./routes/users.js";
 import customerRoutes from "./routes/customer.js";
 import animalDetailRoutes from "./routes/animalDetail.js";
 import reviewRoutes from "./routes/reviews.js";

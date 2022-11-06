@@ -4,10 +4,28 @@ import pool from "../database.js";
 const router = express.Router();
 
 router.post("/", (request, response) => {
-  const { name, age, description, image, customer_id } = request.body;
+  const {
+    name,
+    age,
+    description,
+    image,
+    customer_id,
+    location,
+    phone_number,
+    gender,
+  } = request.body;
   const query =
-    'INSERT INTO public."animal_detail" (name, age, description, image, customer_id) VALUES ($1,$2 ,$3 , $4, $5)';
-  const data = [name, age, description, image, customer_id];
+    'INSERT INTO public."animal_detail" (name, age, description, image, customer_id,location,phone_number,gender) VALUES ($1,$2 ,$3 , $4, $5,$6,$7,$8)';
+  const data = [
+    name,
+    age,
+    description,
+    image,
+    customer_id,
+    location,
+    phone_number,
+    gender,
+  ];
   pool.query(query, data, (err, result) => {
     if (err) {
       throw err;
@@ -36,7 +54,7 @@ router.get("/:id", async (request, response) => {
     'SELECT * FROM public."reviews" where animal_id = $1',
     [params]
   );
-  console.log(reviews);
+
   const animalDetail = await pool.query(
     'SELECT * FROM public."animal_detail" where id = $1',
     [params]
@@ -45,8 +63,8 @@ router.get("/:id", async (request, response) => {
   response.status(200).json({
     status: "success",
 
-    data: {
-      animalDetail: animalDetail.rows,
+    detail: {
+      animalDetail: animalDetail.rows[0],
       reviews: reviews.rows,
       code: response.statusCode,
     },

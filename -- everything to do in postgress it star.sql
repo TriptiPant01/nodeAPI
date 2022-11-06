@@ -34,15 +34,21 @@
 -- CREATE TABLE animal_detail(
 --   id BIGSERIAL NOT NULL PRIMARY KEY,
 --   name VARCHAR(50) NOT NULL,
---   age INT NOT NULL,
+--   age VARCHAR(50) NOT NULL,
 --   description TEXT NOT NULL,
 --   image BYTEA,
---   customer_id BIGINT NOT NULL REFERENCES customer(id)
+--   customer_id BIGINT NOT NULL REFERENCES customer(id),
+--   location VARCHAR(50) NOT NULL,
+--   phone_number INT,
+--   gender VARCHAR (50)
 -- );
 
+-- name, location, gender, age ,image, phone_number, description, 
 -- CREATE TABLE reviews(
 --   id BIGSERIAL NOT NULL PRIMARY KEY,
 --   comments TEXT NOT NULL,
 --   animal_id BIGINT NOT NULL REFERENCES animal_detail(id),
 --   customer_id BIGINT NOT NULL REFERENCES customer(id)
 -- );
+
+
