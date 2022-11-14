@@ -21,7 +21,7 @@ async function getUrlOnBackend(url: string, params?: any, token?: string) {
   }
 }
 
-async function postDataToBackend(url: string, data: any, token: string) {
+async function postDataToBackend(url: string, data: any, token?: string) {
   const req = {
     method: 'POST',
     headers: {
@@ -33,6 +33,7 @@ async function postDataToBackend(url: string, data: any, token: string) {
     data,
   };
 
+  console.log(req);
   try {
     const response = await axios(req);
 
