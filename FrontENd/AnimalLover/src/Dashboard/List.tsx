@@ -5,6 +5,7 @@ import ListContainer from './CommonModule/listContainer';
 import Images from '../Constant/Images';
 import {colors} from '../Constant';
 import {fetchAnimalList} from '../API/Service';
+import {getUserDetail, IuserDetail} from '../Constant/HelperFunction';
 
 export interface IAnimalList {
   id: number;
@@ -17,6 +18,7 @@ export interface IAnimalList {
 }
 export default function List({navigation}) {
   const [animalList, animalListState] = useState<IAnimalList[]>([]);
+  const [userDetail, setuserDetail] = useState<IuserDetail>();
 
   useEffect(() => {
     getProducts();
@@ -24,15 +26,22 @@ export default function List({navigation}) {
 
   const getProducts = async (): Promise<void> => {
     const value = await fetchAnimalList();
+    const userDetailValue = await getUserDetail();
     animalListState(value);
+    setuserDetail(userDetailValue);
   };
 
   const handleOnClick = (id: number, name: string): void => {
     navigation.navigate('Details', {id, name});
   };
+
   return (
     <View style={styles.container}>
-      <Header title="List" />
+      <Header
+        title={`Welcome ${userDetail?.name}`}
+        showSidebar={true}
+        navigation={navigation}
+      />
       {animalList?.map((i, key) => (
         <ListContainer
           name={i.name}

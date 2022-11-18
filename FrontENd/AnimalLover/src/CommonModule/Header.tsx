@@ -1,4 +1,11 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import React, {FC} from 'react';
 import {colors, Images} from '../Constant';
 import {Scale} from '../Constant/HelperFunction';
@@ -7,10 +14,23 @@ interface Header {
   title: string;
   back?: boolean;
   onPressBack?: () => void;
+  showSidebar?: boolean;
+  navigation?: any;
 }
 const Header: FC<Header> = props => {
   return (
     <View style={styles.headerWrapper}>
+      <TouchableOpacity
+        style={styles.hamBurgerContainer}
+        onPress={() => props.navigation.openDrawer()}>
+        {props.showSidebar && (
+          <Image
+            source={Images.hamburgerIcon}
+            style={styles.backIconContainerStyle}
+          />
+        )}
+      </TouchableOpacity>
+
       <TouchableOpacity
         style={styles.imageContainerStyle}
         onPress={props.onPressBack}>
@@ -31,6 +51,21 @@ const Header: FC<Header> = props => {
 export default Header;
 
 const styles = StyleSheet.create({
+  hamBurgerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: Scale(10),
+
+    width: 100,
+    zIndex: 1,
+  },
+  hamburgerIconContainer: {
+    height: Scale(40),
+    width: Scale(40),
+    resizeMode: 'contain',
+  },
+
   imageContainerStyle: {
     justifyContent: 'center',
     alignItems: 'flex-end',
@@ -55,6 +90,7 @@ const styles = StyleSheet.create({
   textstyle: {
     color: 'black',
     paddingBottom: 20,
+    fontWeight: 'bold',
   },
   headerContainer: {
     justifyContent: 'flex-end',

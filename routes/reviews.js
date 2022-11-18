@@ -22,6 +22,7 @@ router.post("/", (request, response) => {
 
 router.get("/", (req, response) => {
   pool.query('SELECT * FROM public."reviews" ', (error, res) => {
+    console.log(error, " this is error");
     if (error) {
       throw error;
     }

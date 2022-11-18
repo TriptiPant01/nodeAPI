@@ -1,17 +1,26 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import DashboardStackNavigator from './DashboardStack';
 import LoginStackNavigator from './LoginStack';
 import {Alert} from 'react-native';
+import {getUserDetail} from '../Constant/HelperFunction';
+import Root from './DrawerNavigation';
 
 const Stack = createNativeStackNavigator();
-
+//
 const App = () => {
+  const [hasToken, setHasToken] = useState<string>('');
   useEffect(() => {
-    Alert.alert('asdf');
+    getUserDetailFromStorage();
   }, []);
+  const getUserDetailFromStorage = async (): Promise<void> => {
+    const value = await getUserDetail();
+
+    setHasToken(value?.id);
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -19,8 +28,14 @@ const App = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Home" component={DashboardStackNavigator} />
-        <Stack.Screen name="Login" component={LoginStackNavigator} />
+        {!hasToken ? (
+          <Stack.Screen name="Login" component={LoginStackNavigator} />
+        ) : (
+          <>
+            {/* <Stack.Screen name="Home" component={Root} /> */}
+            <Stack.Screen name="Root" component={Root} />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

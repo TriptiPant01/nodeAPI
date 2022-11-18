@@ -41,6 +41,7 @@ router.post("/", (request, response) => {
 router.get("/", (req, response) => {
   pool.query('SELECT * FROM public."animal_detail" ', (error, res) => {
     if (error) {
+      console.log(error);
       throw error;
     }
     response.status(200).json(res.rows);
